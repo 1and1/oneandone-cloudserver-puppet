@@ -1,0 +1,13 @@
+{
+  "name": "oneandone-puppet1and1",
+  "version": "1.0.1",
+  "author": "Nurfet Becirevic (stackpointcloud.com)",
+  "summary": "Manage 1&1 cloud servers with Puppet",
+  "license": "Apache-2.0",
+  "source": "git://github.com/1and1/oneandone-cloudserver-puppet",
+  "project_page": "https://github.com/1and1/oneandone-cloudserver-puppet",
+  "issues_url": "https://github.com/1and1/oneandone-cloudserver-puppet/issues",
+  "dependencies": [],
+  "data_provider": null
+}
+
