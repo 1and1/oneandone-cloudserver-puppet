@@ -7,6 +7,7 @@
 1. [Installation](#installation)
 1. [Usage](#usage)
     * [Full Server Example](#full-server-example)
+    * [Firewall Example](#firewall-example)
 1. [Reference](#reference)
 1. [Limitations](#limitations)
 1. [Development](#development)
@@ -28,15 +29,21 @@ The 1&amp;1 Puppet module relies on the 1&amp;1 Cloud API to manage 1&amp;1 serv
 
 1. Install the 1&amp;1 Ruby SDK gem.
 
-    `gem install 1and1`
+    ```
+    gem install 1and1
+    ```
 
 2. Install the module.
 
-    `puppet module install oneandone-puppet1and1`
+    ```
+    puppet module install oneandone-puppet1and1
+    ```
 
 3. Set the environment variable for authentication.
 
-    `export ONEANDONE_API_KEY="your-token-key-here"`
+    ```
+    export ONEANDONE_API_KEY="your-token-key-here"
+    ```
 
 ## Usage
 
@@ -100,6 +107,47 @@ oneandone_server { 'example2':
 }
 ```
 
+### Firewall Example
+
+The next example shows how to create a firewall policy with a couple of rules and assign server IPs to the policy.
+
+```
+oneandone_firewall { 'puppet-test-policy':
+  ensure      => present,
+  description => 'Firewall description',
+  rules       => [
+    {
+      port_from => 80,
+      port_to   => 80,
+      protocol  => 'TCP',
+      source    => '0.0.0.0'
+    },
+    {
+      port_from => 8080,
+      port_to   => 8080,
+      protocol  => 'TCP/UDP',
+      source    => '0.0.0.0'
+    },
+    {
+      port_from => 161,
+      port_to   => 162,
+      protocol  => 'UDP',
+      source    => '0.0.0.0'
+    },
+    {
+      protocol  => 'ICMP'
+    },
+    {
+      protocol  => 'GRE'
+    },
+    {
+      protocol  => 'IPSEC'
+    }
+  ],
+  server_ips    => ['109.228.55.231', '82.165.163.238', '109.228.59.190']
+}
+```
+
 ## Reference
 
 **Describe `oneandone_server` type, properties and the provider:**
@@ -153,9 +201,37 @@ oneandone_server {'server1':
 }
 ```
 
+**Create a firewall policy:**
+
+```
+oneandone_firewall { 'fpolicy1':
+  ensure      => present,
+  rules       => [
+    {
+      port_from => 80,
+      port_to   => 80,
+      protocol  => 'TCP'
+    }
+  ]
+}
+```
+
+**Update the description and server IPs of an existing firewall policy:**
+
+```
+oneandone_firewall { 'fpolicy1':
+  description => 'new description',
+  server_ips    => ['109.228.55.231']
+}
+```
+
+Specify `server_ips => []` to unassign all server IPs from the policy.
+
 ## Limitations
 
-Currently the module only manages the `oneandone_server` resources.
+- The module only manages the `oneandone_server` and `oneandone_firewall` resources.
+- Not all the API operations on the resources are supported.
+- The module does not support the firewall rules update.
 
 ## Development
 
