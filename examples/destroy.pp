@@ -5,3 +5,7 @@ oneandone_server { ['node1-example', 'node2-example']:
 oneandone_firewall { 'puppet-test-policy': 
   ensure => absent
 }
+
+oneandone_loadbalancer { 'puppet-load-balancer': 
+  ensure => absent
+}
