@@ -8,6 +8,7 @@
 1. [Usage](#usage)
     * [Full Server Example](#full-server-example)
     * [Firewall Example](#firewall-example)
+    * [Load Balancer Example](#load-balancer-example)
 1. [Reference](#reference)
 1. [Limitations](#limitations)
 1. [Development](#development)
@@ -148,6 +149,38 @@ oneandone_firewall { 'puppet-test-policy':
 }
 ```
 
+### Load Balancer Example
+
+The module supports 1&amp;1 load balancers as well. 
+
+```
+oneandone_loadbalancer { 'puppet-load-balancer':
+  ensure                => present,
+  description           => 'load balancer desc',
+  datacenter            => 'GB',
+  method                => 'LEAST_CONNECTIONS',
+  health_check_test     => 'TCP',
+  health_check_interval => 15,
+  persistence           => true,
+  persistence_time      => 1200,
+  rules                 => [
+    {
+      protocol      => 'TCP',
+      port_balancer => 80,
+      port_server   => 80,
+      source        => '0.0.0.0'
+    },
+    {
+      protocol      => 'UDP',
+      port_balancer => 161,
+      port_server   => 161,
+      source        => '0.0.0.0'
+    }
+  ]
+}
+
+```
+
 ## Reference
 
 **Describe `oneandone_server` type, properties and the provider:**
@@ -227,11 +260,36 @@ oneandone_firewall { 'fpolicy1':
 
 Specify `server_ips => []` to unassign all server IPs from the policy.
 
+**Create a load balancer:**
+
+```
+oneandone_loadbalancer { 'load-balancer-example':
+  ensure                => present,
+  method                => 'ROUND_ROBIN',
+  rules                 => [
+    {
+      protocol      => 'TCP',
+      port_balancer => 80,
+      port_server   => 80,
+      source        => '0.0.0.0'
+    }
+  ]
+}
+```
+
+Set the load balancer properties, such as `method`, `persistence`, `rules` etc., by adding or editing them in the manifest file.
+Check the available properties for the load balancer type with:
+
+```
+puppet describe oneandone_loadbalancer
+```
+
 ## Limitations
 
 - The module only manages the `oneandone_server` and `oneandone_firewall` resources.
 - Not all the API operations on the resources are supported.
 - The module does not support the firewall rules update.
+- Due to 1&amp;1 API limitations, it is not allowed to modify all load balancer rules at once.
 
 ## Development
 
