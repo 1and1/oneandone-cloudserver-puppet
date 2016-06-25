@@ -286,7 +286,7 @@ puppet describe oneandone_loadbalancer
 
 ## Limitations
 
-- The module only manages the `oneandone_server` and `oneandone_firewall` resources.
+- The module only manages the `oneandone_server`, `oneandone_firewall` and `oneandone_loadbalancer` resources.
 - Not all the API operations on the resources are supported.
 - The module does not support the firewall rules update.
 - Due to 1&amp;1 API limitations, it is not allowed to modify all load balancer rules at once.
