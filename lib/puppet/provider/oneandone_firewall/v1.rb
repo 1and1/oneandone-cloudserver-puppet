@@ -49,12 +49,16 @@ Puppet::Type.type(:oneandone_firewall).provide(:v1) do
   def self.rules_from_instance(instance)
     rules = []
     instance['rules'].each do |rule|
-      rules.push(
-        protocol: rule['protocol'],
-        port_from: rule['port_from'],
-        port_to: rule['port_to'],
-        source: rule['source']
-      )
+      r = {
+          protocol: rule['protocol'],
+          port_from: rule['port_from'].nil? ? nil : rule['port_from'],
+          port_to: rule['port_to'].nil? ? nil : rule['port_to'],
+          source: rule['source'],
+          description: rule['description'].nil? ? nil : rule['description'],
+          action: rule['action'].nil? ? nil : rule['action'],
+          port: rule['port'].nil? ? nil : rule['port']
+      }
+      rules.push(r.select{|k,v| !v.nil?})
     end
     rules
   end
