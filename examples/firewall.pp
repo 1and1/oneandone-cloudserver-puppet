@@ -3,9 +3,9 @@ oneandone_firewall { 'puppet-test-policy':
   description => 'Test policy desc',
   rules       => [
     {
-      port_from => 80,
-      port_to   => 80,
+      port => '80-83',
       protocol  => 'TCP',
+      description => 'Testing firewall improvements with puppet.',
       source    => '0.0.0.0'
     },
     {
