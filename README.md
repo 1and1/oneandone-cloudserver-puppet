@@ -58,6 +58,16 @@ oneandone_server { 'example-server':
 }
 ```
 
+The following snippet describes a simple 1&amp;1 baremetal server resource:
+```
+oneandone_server { '1node-baremetal-example':
+  ensure              => present,
+  datacenter          => 'GB',
+  appliance_id        => '33352CCE1E710AF200CD1234BFD18862',
+  baremetal_model_id  => '81504C620D98BCEBAA5202D145203B4B'
+}
+```
+
 Applying a Puppet manifest which contains the snippet above will create a 1&amp;1 server named `example-server` in the `US` data center (default) using the Debian 8 appliance image with fixed-server size 'L'.
 
 ```
