@@ -55,6 +55,8 @@ Puppet::Type.type(:oneandone_server).provide(:v1) do
       image: !instance['image'].nil? ? instance['image']['name'] : '',
       ips: ips_from_instance(instance),
       hdds: hdds_from_instance(instance),
+      server_type: instance['server_type'],
+      baremetal_model_id: instance['baremetal_model_id'],
       ensure: state
     }
 
@@ -117,7 +119,9 @@ Puppet::Type.type(:oneandone_server).provide(:v1) do
         vcore: resource[:virtual_processors],
         cores_per_processor: resource[:cores_per_processor],
         ram: resource[:ram],
-        hdds: resource[:hdds]
+        hdds: resource[:hdds],
+        server_type: resource[:server_type],
+        baremetal_model_id: resource[:baremetal_model_id]
       )
 
       server.wait_for(timeout: 25, interval: 15)

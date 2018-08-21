@@ -169,6 +169,20 @@ Puppet::Type.newtype(:oneandone_server) do
     end
   end
 
+  newproperty(:server_type) do
+    desc 'Type of the server (cloud or baremetal).'
+    validate do |value|
+      raise('The server type must be a String') unless value.is_a?(String)
+    end
+  end
+
+  newproperty(:baremetal_model_id) do
+    desc 'ID of the desired baremetal model.'
+    validate do |value|
+      raise('The baremetal model id must be a String') unless value.is_a?(String)
+    end
+  end
+
   newproperty(:server_size) do
     desc 'The server size.'
     defaultto 'FLEX'
