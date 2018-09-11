@@ -19,6 +19,8 @@ The 1&amp;1 Puppet module leverages deployment of 1&amp;1 Cloud servers from a P
 
 The 1&amp;1 Puppet module relies on the 1&amp;1 Cloud API to manage 1&amp;1 servers. A Puppet manifest file can be used to describe a desired infrastructure including servers, data center locations for the servers, CPU units,  virtual cores, memory, states and other properties. The infrastructure deployment can then be easily automated using Puppet.
 
+For more information on the 1&amp;1 Cloud Server Puppet module see the [1&1 Community Portal](https://www.1and1.com/cloud-community/).
+
 ## Requirements
 
 * Puppet 4.x
